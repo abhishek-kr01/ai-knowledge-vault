@@ -2,6 +2,18 @@
 
 A full-stack AI-powered knowledge management system where users can create long-form notes, automatically generate insights using AI, and query their notes through a chat-like interface.
 
+---
+
+## 🔗 Live Links
+
+* 🚀 **Live Application:** https://ai-knowledge-vault-theta.vercel.app/
+* 🔧 **Backend API:** https://ai-knowledge-vault.onrender.com
+* 💻 **GitHub Repository:** https://github.com/abhishek-kr01/ai-knowledge-vault
+
+---
+
+## 🎯 Purpose
+
 Built as an interview assignment to demonstrate:
 
 * Async system design
@@ -54,12 +66,13 @@ Built as an interview assignment to demonstrate:
 ### 📝 Notes CRUD
 
 * Create, list, view, and delete notes
-* Each note contains:
 
-  * `title`, `content`
-  * `status` → `processing | ready | failed`
-  * `summary`, `keyPoints`, `tags`
-  * `createdAt`
+Each note includes:
+
+* `title`, `content`
+* `status` → `processing | ready | failed`
+* `summary`, `keyPoints`, `tags`
+* `createdAt`
 
 ---
 
@@ -68,7 +81,7 @@ Built as an interview assignment to demonstrate:
 When a note is created:
 
 1. Save note with `status = processing`
-2. Return API response immediately
+2. Return response immediately
 3. Trigger background AI processing (non-blocking)
 4. Generate:
 
@@ -81,7 +94,7 @@ When a note is created:
 
 * Retry AI call once on failure
 * If still fails → mark as `failed`
-* Prevent notes from getting stuck in `processing`
+* Ensures no note remains stuck in `processing`
 
 ---
 
@@ -92,13 +105,13 @@ When a note is created:
 
 #### ⚡ Optimization Strategy
 
-Instead of sending full note content:
+Instead of sending full content:
 
 * Use **summary (high signal)**
 * Use **key points (structured context)**
 * Use **trimmed content (for grounding)**
 
-👉 This reduces token usage and improves response quality.
+👉 Improves response quality and reduces token usage
 
 ---
 
@@ -106,27 +119,27 @@ Instead of sending full note content:
 
 Routes:
 
-* `/` → Notes list (status indicators)
+* `/` → Notes list with status indicators
 * `/new` → Create note
 * `/notes/[id]` → Detail + Query UI
 
 #### UX Handling:
 
 * Clear loading states
-* Error messages (no silent failures)
+* Explicit error messages
 * Query disabled while loading
 * Query disabled if note is not ready
+* Auto-refresh (polling) while processing
 
 ---
 
 ## 🧠 AI Prompt Strategy
 
-### 1. Insights Generation (Summary, Tags, Key Points)
+### 1. Insights Generation
 
-* Enforces **strict JSON output**
+* Enforces strict JSON output
 * Defines exact schema
 * Limits output size
-* Ensures consistent structure
 
 ```json
 {
@@ -145,7 +158,7 @@ Routes:
   * summary
   * keyPoints
   * partial content
-* Generates concise, context-aware answers
+* Produces concise, context-aware answers
 
 ---
 
@@ -163,7 +176,7 @@ Implemented in:
 * Schema validation
 * Controlled error handling
 
-👉 Ensures unreliable AI output does not break the system.
+👉 Prevents invalid AI output from breaking the system
 
 ---
 
@@ -171,13 +184,13 @@ Implemented in:
 
 ### Why no queue system?
 
-For this assignment, I used a simple in-process async approach to keep the implementation lightweight and focused within the given time.
+For this assignment, a simple in-process async approach was used to keep the implementation lightweight and focused within the given timeline.
 
 In a production setup, this could be improved by:
 
-* Using a job queue for better reliability
-* Handling retries more robustly
-* Scaling background processing independently
+* Using a job queue (BullMQ, etc.)
+* More robust retry mechanisms
+* Independent worker scaling
 
 ---
 
@@ -201,7 +214,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Runs on: **http://localhost:8000**
+Runs on: **http://localhost:4000**
 
 ---
 
@@ -230,11 +243,11 @@ Runs on: **http://localhost:3000**
 
 ## 📌 Conclusion
 
-This project focuses on building a **real-world AI-powered system** with:
+This project demonstrates a **real-world AI-powered system** with:
 
 * Reliable async processing
 * Defensive AI handling
 * Clean architecture
 * Thoughtful frontend UX
 
-Designed to reflect practical engineering decisions within a limited time constraint.
+Designed to balance simplicity with practical engineering decisions under time constraints.
