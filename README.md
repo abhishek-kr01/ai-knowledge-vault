@@ -7,7 +7,6 @@ A full-stack AI-powered knowledge management system where users can create long-
 ## 🔗 Live Links
 
 * 🚀 **Live Application:** https://ai-knowledge-vault-theta.vercel.app/
-* 🔧 **Backend API:** https://ai-knowledge-vault.onrender.com
 * 💻 **GitHub Repository:** https://github.com/abhishek-kr01/ai-knowledge-vault
 
 ---
